@@ -1,5 +1,4 @@
 import "./App.css";
-
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./index.css";
@@ -9,26 +8,32 @@ import { MdBookmarkAdded } from "react-icons/md";
 function App() {
   const [newTask, setnewTask] = useState("");
   const [taskArray, setTaskArray] = useState([]);
-
+  const [isComplete, setIsComplete] = useState(false);
+  const [taskProp, setTaskProp] = useState({});
   function handleAddnewTask() {
     if (newTask !== "") setTaskArray((prevArray) => [newTask, ...prevArray]);
     else console.log("please enter task!");
     setnewTask("");
   }
-
   function handleKeyDown(event) {
     if (event.key === "Enter") {
       console.log("Enter key pressed");
       handleAddnewTask();
     }
+    setTaskProp((prevTask) => {
+      newTask, isComplete, prevTask;
+    });
   }
-
   useEffect(() => {
     console.log("Updated taskArray: ", taskArray);
-  }, [taskArray]);
+    console.log(taskProp);
+  }, [taskArray, taskProp]);
   function handleDelete(key) {
-    setTaskArray(() => taskArray.filter((_, i) => i !== key));
+    setTaskArray((tasks) => tasks.filter((task) => task.key !== key));
     console.log(key);
+  }
+  function handleComplete() {
+    setIsComplete(!isComplete);
   }
   return (
     <div className=" text-white h-screen flex flex-col items-center ">
@@ -58,12 +63,18 @@ function App() {
             className="px-10 py-2 text-2xl rounded-md bg-slate-800 text-white focus:outline-none border border-slate-700 flex justify-between items-center"
           >
             <span>{task}</span>
-            <button onClick={() => handleDelete(index)} className="ml-4">
-              <FaDeleteLeft />
-            </button>
-            <button className="ml-4">
-              <MdBookmarkAdd />
-            </button>
+            {/* Wrap the buttons in a flex container and add margin to the first button */}
+            <div className="flex space-x-4 ml-4">
+              <button
+                onClick={() => handleDelete(index)}
+                className="focus:outline-none"
+              >
+                <FaDeleteLeft className="text-2xl" />
+              </button>
+              <button className="focus:outline-none">
+                <MdBookmarkAdd className="text-2xl" />
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -72,3 +83,8 @@ function App() {
 }
 
 export default App;
+
+//1 make an object
+//2 add 2 value task,isComplted
+//3 itrate them in manner it will show same as previous
+//4 when user delete or complete work it should be updated in object
