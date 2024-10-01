@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { MdBookmarkAdd } from "react-icons/md";
 import { MdBookmarkAdded } from "react-icons/md";
-
+import { VscClearAll } from "react-icons/vsc";
 export default function Task() {
   const [newTask, setnewTask] = useState("");
   const [taskArray, setTaskArray] = useState([]);
@@ -48,7 +48,7 @@ export default function Task() {
         <input
           type="text"
           placeholder="Enter your work...."
-          className="px-20 py-2 rounded-md bg-slate-800 text-white focus:outline-none border border-slate-700"
+          className="px-12 py-3 rounded-md bg-slate-800 text-white focus:outline-none border border-slate-700"
           value={newTask}
           onChange={(e) => setnewTask(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -66,7 +66,11 @@ export default function Task() {
             key={task.id}
             className="px-10 py-2 text-2xl rounded-md bg-slate-800 text-white focus:outline-none border border-slate-700 flex justify-between items-center"
           >
-            <span>{task.task}</span>
+            <span
+              style={task.isComplete ? { textDecoration: "line-through" } : {}}
+            >
+              {task.task}
+            </span>
             <div className="flex space-x-4 ml-4">
               <button
                 onClick={() => handleDelete(task.id)}
@@ -88,6 +92,9 @@ export default function Task() {
           </div>
         ))}
       </div>
+      <button>
+        <VscClearAll className="px-5 py-4" />
+      </button>
     </div>
   );
 }
