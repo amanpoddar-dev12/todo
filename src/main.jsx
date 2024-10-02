@@ -2,11 +2,11 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { TaskProvider } from "./context/taskContextProvider.jsx";
+import TaskContextProvider from "./context/taskContextProvider.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <TaskProvider>
+    <TaskContextProvider>
       <App />
-    </TaskProvider>
+    </TaskContextProvider>
   </StrictMode>
 );
