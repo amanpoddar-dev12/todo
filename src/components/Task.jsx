@@ -93,7 +93,7 @@ export default function Task() {
         ))}
       </div>
       <button>
-        <VscClearAll className="px-5 py-4" />
+        <VscClearAll className="" />
       </button>
     </div>
   );
