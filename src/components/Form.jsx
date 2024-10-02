@@ -1,43 +1,25 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { MdBookmarkAdd } from "react-icons/md";
 import { MdBookmarkAdded } from "react-icons/md";
 import { VscClearAll } from "react-icons/vsc";
+import TaskContext from "../context/taskContext";
 export default function Task() {
-  const [newTask, setnewTask] = useState("");
-  const [taskArray, setTaskArray] = useState([]);
-  const [isComplete, setIsComplete] = useState(false);
-  // const [taskProp, setTaskProp] = useState({});
-  function handleAddnewTask() {
-    const newItem = { task: newTask, id: Date.now(), isComplete: isComplete };
-    console.log(newItem);
-    if (newTask !== "") setTaskArray((prevArray) => [newItem, ...prevArray]);
-    else console.log("please enter task!");
-    setnewTask("");
-  }
-  function handleKeyDown(event) {
-    if (event.key === "Enter") {
-      console.log("Enter key pressed");
-      handleAddnewTask();
-    }
-  }
+  const {
+    newTask,
+    setnewTask,
+    taskArray,
+    handleKeyDown,
+    handleAddnewTask,
+    handleDelete,
+    handleComplete,
+  } = useContext(TaskContext);
+
   useEffect(() => {
     console.log("Updated taskArray: ", taskArray);
     // console.log(taskProp);
   }, [taskArray]);
-  function handleDelete(id) {
-    const newTaskArray = taskArray.filter((task) => task.id !== id);
-    setTaskArray(newTaskArray);
-  }
-
-  function handleComplete(id) {
-    setTaskArray(
-      taskArray.map((task) =>
-        task.id === id ? { ...task, isComplete: !task.isComplete } : task
-      )
-    );
-  }
 
   return (
     <div className=" text-white h-screen flex flex-col items-center ">

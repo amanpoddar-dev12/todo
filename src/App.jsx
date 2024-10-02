@@ -1,12 +1,12 @@
 import "./App.css";
-import Task from "./components/Task";
+import Form from "./components/Form";
 
 import "./index.css";
 
 function App() {
   return (
     <div>
-      <Task />
+      <Form />
     </div>
   );
 }
