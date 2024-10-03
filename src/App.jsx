@@ -1,22 +1,8 @@
 import "./App.css";
-
 import "./index.css";
-import StarRating from "custom-star-rating";
+import Form from "./components/Form";
 function App() {
-  return (
-    <div className="flex items-center flex-col ">
-      {
-        <StarRating
-          maxRating={5}
-          defaultRating={3}
-          size={40}
-          color="gold"
-          onSetMovieRating={(rating) => console.log(`New rating: ${rating}`)}
-          messages={["Bad", "Okay", "Good", "Great", "Excellent"]}
-        />
-      }
-    </div>
-  );
+  return <div className="">{<Form />}</div>;
 }
 
 export default App;

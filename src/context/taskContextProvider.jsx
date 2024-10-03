@@ -1,15 +1,33 @@
-import React, { useState } from "react";
-import TaskContext from "./taskContext"; // Import TaskContext
+import React, { useEffect, useState } from "react";
+import TaskContext from "./taskContext";
 const TaskContextProvider = ({ children }) => {
-  const [newTask, setnewTask] = useState("");
+  const [newTask, setNewTask] = useState("");
   const [taskArray, setTaskArray] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    try {
+      const tasks = JSON.parse(localStorage.getItem("tasks"));
+      if (tasks && tasks.length > 0) {
+        setTaskArray(tasks);
+      }
+    } catch (error) {
+      console.error("Failed to parse tasks from localStorage:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (taskArray.length > 0) {
+      localStorage.setItem("tasks", JSON.stringify(taskArray));
+    }
+  }, [taskArray]);
+
   function handleAddnewTask() {
     const newItem = { task: newTask, id: Date.now(), isComplete: isComplete };
     console.log(newItem);
     if (newTask !== "") setTaskArray((prevArray) => [newItem, ...prevArray]);
     else console.log("please enter task!");
-    setnewTask("");
+    setNewTask("");
   }
   function handleKeyDown(event) {
     if (event.key === "Enter") {
@@ -28,11 +46,12 @@ const TaskContextProvider = ({ children }) => {
       )
     );
   }
+
   return (
     <TaskContext.Provider
       value={{
         newTask,
-        setnewTask,
+        setNewTask,
         taskArray,
         setTaskArray,
         isComplete,

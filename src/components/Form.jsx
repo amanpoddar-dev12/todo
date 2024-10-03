@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { MdBookmarkAdd } from "react-icons/md";
@@ -8,18 +8,13 @@ import TaskContext from "../context/taskContext";
 export default function Task() {
   const {
     newTask,
-    setnewTask,
+    setNewTask,
     taskArray,
     handleKeyDown,
     handleAddnewTask,
     handleDelete,
     handleComplete,
   } = useContext(TaskContext);
-
-  useEffect(() => {
-    console.log("Updated taskArray: ", taskArray);
-    // console.log(taskProp);
-  }, [taskArray]);
 
   return (
     <div className=" text-white h-screen flex flex-col items-center ">
@@ -32,7 +27,7 @@ export default function Task() {
           placeholder="Enter your work...."
           className="px-12 py-3 rounded-md bg-slate-800 text-white focus:outline-none border border-slate-700"
           value={newTask}
-          onChange={(e) => setnewTask(e.target.value)}
+          onChange={(e) => setNewTask(e.target.value)}
           onKeyDown={handleKeyDown}
         />
         <button
