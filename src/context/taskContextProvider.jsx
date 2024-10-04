@@ -4,7 +4,8 @@ const TaskContextProvider = ({ children }) => {
   const [newTask, setNewTask] = useState("");
   const [taskArray, setTaskArray] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
-
+  const [editValue, setEditValue] = useState("");
+  const [onClear, setOnClear] = useState(false);
   useEffect(() => {
     try {
       const tasks = JSON.parse(localStorage.getItem("tasks"));
@@ -52,6 +53,37 @@ const TaskContextProvider = ({ children }) => {
     );
   }
 
+  function handleOnEnterSave(id) {
+    console.log("enter");
+    const updatedTodos = taskArray.map((task) =>
+      task.id === id ? { ...task, task: editValue, isEdited: false } : task
+    );
+    setTaskArray(updatedTodos);
+  }
+
+  function handleEdit(id) {
+    const updatedTodos = taskArray.map((task) =>
+      task.id === id ? { ...task, isEdited: true } : task
+    );
+    setTaskArray(updatedTodos);
+  }
+
+  function handleClear() {
+    setTaskArray([]);
+    localStorage.setItem("tasks", JSON.stringify([]));
+    setOnClear(true);
+    setTimeout(() => {
+      console.log("Inside settimeout");
+      setOnClear(false);
+    }, 300);
+    console.log("Outside settimeout");
+  }
+  function handleSave(id) {
+    const updatedTodos = taskArray.map((task) =>
+      task.id === id ? { ...task, task: editValue, isEdited: false } : task
+    );
+    setTaskArray(updatedTodos);
+  }
   return (
     <TaskContext.Provider
       value={{
@@ -65,6 +97,13 @@ const TaskContextProvider = ({ children }) => {
         handleKeyDown,
         handleDelete,
         handleComplete,
+        handleOnEnterSave,
+        setEditValue,
+        editValue,
+        handleEdit,
+        handleSave,
+        handleClear,
+        onClear,
       }}
     >
       {children}

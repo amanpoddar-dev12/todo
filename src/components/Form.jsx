@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { MdBookmarkAdd } from "react-icons/md";
@@ -7,7 +7,7 @@ import { VscClearAll } from "react-icons/vsc";
 import { CiSaveUp2 } from "react-icons/ci";
 import { FaEdit } from "react-icons/fa";
 import TaskContext from "../context/taskContext";
-// import { IoIosDoneAll } from "react-icons/io";
+
 export default function Task() {
   const {
     newTask,
@@ -17,43 +17,13 @@ export default function Task() {
     handleAddnewTask,
     handleDelete,
     handleComplete,
-    setTaskArray,
+    handleClear,
+    onClear,
+    setEditValue,
+    handleSave,
+    handleEdit,
   } = useContext(TaskContext);
-  const [editValue, setEditValue] = useState("");
-  const [onClear, setOnClear] = useState(false);
-  function handleEdit(id) {
-    const updatedTodos = taskArray.map((task) =>
-      task.id === id ? { ...task, isEdited: true } : task
-    );
-    setTaskArray(updatedTodos);
-  }
 
-  useEffect(() => {
-    console.log(taskArray);
-  });
-  function handleClear() {
-    setTaskArray([]);
-    localStorage.setItem("tasks", JSON.stringify([]));
-    setOnClear(true);
-    setTimeout(() => {
-      console.log("Inside settimeout");
-      setOnClear(false);
-    }, 300);
-    console.log("Outside settimeout");
-  }
-  function handleSave(id) {
-    const updatedTodos = taskArray.map((task) =>
-      task.id === id ? { ...task, task: editValue, isEdited: false } : task
-    );
-    setTaskArray(updatedTodos);
-  }
-  function handleOnEnterSave(id) {
-    console.log("enter");
-    const updatedTodos = taskArray.map((task) =>
-      task.id === id ? { ...task, task: editValue, isEdited: false } : task
-    );
-    setTaskArray(updatedTodos);
-  }
   return (
     <div className=" text-white h-screen flex flex-col items-center ">
       <h1 className="text-7xl text-center underline font-mono font-extralight md:font-thin tracking-wide text-indigo-100">
@@ -97,7 +67,6 @@ export default function Task() {
                 }
                 onChange={(e) => setEditValue(e.target.value)}
                 className="bg-slate-800 focus:outline-none"
-                onKeyDown={handleOnEnterSave}
               ></input>
             ) : (
               <span
