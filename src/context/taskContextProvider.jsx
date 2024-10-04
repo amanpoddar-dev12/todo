@@ -23,8 +23,13 @@ const TaskContextProvider = ({ children }) => {
   }, [taskArray]);
 
   function handleAddnewTask() {
-    const newItem = { task: newTask, id: Date.now(), isComplete: isComplete };
-    console.log(newItem);
+    const newItem = {
+      task: newTask,
+      id: Date.now(),
+      isComplete: isComplete,
+      isEdited: false,
+    };
+    // console.log(newItem);
     if (newTask !== "") setTaskArray((prevArray) => [newItem, ...prevArray]);
     else console.log("please enter task!");
     setNewTask("");

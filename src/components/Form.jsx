@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { MdBookmarkAdd } from "react-icons/md";
 import { MdBookmarkAdded } from "react-icons/md";
 import { VscClearAll } from "react-icons/vsc";
+import { CiSaveUp2 } from "react-icons/ci";
+import { FaEdit } from "react-icons/fa";
 import TaskContext from "../context/taskContext";
+// import { IoIosDoneAll } from "react-icons/io";
 export default function Task() {
   const {
     newTask,
@@ -14,8 +17,43 @@ export default function Task() {
     handleAddnewTask,
     handleDelete,
     handleComplete,
+    setTaskArray,
   } = useContext(TaskContext);
+  const [editValue, setEditValue] = useState("");
+  const [onClear, setOnClear] = useState(false);
+  function handleEdit(id) {
+    const updatedTodos = taskArray.map((task) =>
+      task.id === id ? { ...task, isEdited: true } : task
+    );
+    setTaskArray(updatedTodos);
+  }
 
+  useEffect(() => {
+    console.log(taskArray);
+  });
+  function handleClear() {
+    setTaskArray([]);
+    localStorage.setItem("tasks", JSON.stringify([]));
+    setOnClear(true);
+    setTimeout(() => {
+      console.log("Inside settimeout");
+      setOnClear(false);
+    }, 300);
+    console.log("Outside settimeout");
+  }
+  function handleSave(id) {
+    const updatedTodos = taskArray.map((task) =>
+      task.id === id ? { ...task, task: editValue, isEdited: false } : task
+    );
+    setTaskArray(updatedTodos);
+  }
+  function handleOnEnterSave(id) {
+    console.log("enter");
+    const updatedTodos = taskArray.map((task) =>
+      task.id === id ? { ...task, task: editValue, isEdited: false } : task
+    );
+    setTaskArray(updatedTodos);
+  }
   return (
     <div className=" text-white h-screen flex flex-col items-center ">
       <h1 className="text-7xl text-center underline font-mono font-extralight md:font-thin tracking-wide text-indigo-100">
@@ -36,6 +74,13 @@ export default function Task() {
         >
           <FaPlus />
         </button>
+        <button onClick={handleClear}>
+          {onClear ? (
+            <CiSaveUp2 className="text-4xl" />
+          ) : (
+            <VscClearAll className="text-4xl" />
+          )}
+        </button>
       </div>
       <div className="mt-8 flex flex-col space-y-5">
         {taskArray.map((task) => (
@@ -43,11 +88,26 @@ export default function Task() {
             key={task.id}
             className="px-10 py-2 text-2xl rounded-md bg-slate-800 text-white focus:outline-none border border-slate-700 flex justify-between items-center"
           >
-            <span
-              style={task.isComplete ? { textDecoration: "line-through" } : {}}
-            >
-              {task.task}
-            </span>
+            {task.isEdited ? (
+              <input
+                type="text"
+                defaultValue={task.task}
+                style={
+                  task.isComplete ? { textDecoration: "line-through" } : {}
+                }
+                onChange={(e) => setEditValue(e.target.value)}
+                className="bg-slate-800 focus:outline-none"
+                onKeyDown={handleOnEnterSave}
+              ></input>
+            ) : (
+              <span
+                style={
+                  task.isComplete ? { textDecoration: "line-through" } : {}
+                }
+              >
+                {task.task}
+              </span>
+            )}
             <div className="flex space-x-4 ml-4">
               <button
                 onClick={() => handleDelete(task.id)}
@@ -65,13 +125,19 @@ export default function Task() {
                   <MdBookmarkAdd className="text-2xl" />
                 )}
               </button>
+              {task.isEdited ? (
+                <button onClick={() => handleSave(task.id)}>
+                  <CiSaveUp2 className="text-green-500" />
+                </button>
+              ) : (
+                <button onClick={() => handleEdit(task.id)}>
+                  <FaEdit />
+                </button>
+              )}
             </div>
           </div>
         ))}
       </div>
-      <button>
-        <VscClearAll className="" />
-      </button>
     </div>
   );
 }
