@@ -35,7 +35,7 @@ function Tasks() {
             <span
               style={task.isComplete ? { textDecoration: "line-through" } : {}}
             >
-              {task.task}
+              {task.task === "" ? "🙁?" : task.task}
             </span>
           )}
           <div className="flex space-x-2 sm:space-x-4 ml-4">
