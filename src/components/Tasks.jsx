@@ -13,6 +13,7 @@ function Tasks() {
     setEditValue,
     handleSave,
     handleEdit,
+    editValue,
   } = useContext(TaskContext);
 
   return (
@@ -25,7 +26,7 @@ function Tasks() {
           {task.isEdited ? (
             <input
               type="text"
-              defaultValue={task.task}
+              value={editValue}
               style={task.isComplete ? { textDecoration: "line-through" } : {}}
               onChange={(e) => setEditValue(e.target.value)}
               className="w-full max-w-full bg-slate-800 text-lg px-3 py-2 rounded-md focus:outline-none  sm:text-lg lg:text-xl"
@@ -59,7 +60,7 @@ function Tasks() {
                 <CiSaveUp2 className="text-green-500 text-lg sm:text-xl" />
               </button>
             ) : (
-              <button onClick={() => handleEdit(task.id)}>
+              <button onClick={() => handleEdit(task.id, task.task)}>
                 <FaEdit className="text-lg sm:text-xl" />
               </button>
             )}

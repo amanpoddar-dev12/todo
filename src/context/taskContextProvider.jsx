@@ -61,13 +61,6 @@ const TaskContextProvider = ({ children }) => {
     setTaskArray(updatedTodos);
   }
 
-  function handleEdit(id) {
-    const updatedTodos = taskArray.map((task) =>
-      task.id === id ? { ...task, isEdited: true } : task
-    );
-    setTaskArray(updatedTodos);
-  }
-
   function handleClear() {
     setTaskArray([]);
     localStorage.setItem("tasks", JSON.stringify([]));
@@ -77,6 +70,13 @@ const TaskContextProvider = ({ children }) => {
       setOnClear(false);
     }, 300);
     console.log("Outside settimeout");
+  }
+  function handleEdit(id, currentTaskValue) {
+    setEditValue(currentTaskValue);
+    const updatedTodos = taskArray.map((task) =>
+      task.id === id ? { ...task, isEdited: true } : task
+    );
+    setTaskArray(updatedTodos);
   }
   function handleSave(id) {
     const updatedTodos = taskArray.map((task) =>
