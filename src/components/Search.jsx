@@ -14,7 +14,7 @@ export default function Search() {
     onClear,
   } = useContext(TaskContext);
   return (
-    <div className="mt-8 flex flex-row sm:flex-row items-center space-y-4 space-x-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+    <div className="mt-8 flex flex-row sm:flex-row items-center space-y-1 space-x-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
       <input
         type="text"
         placeholder="Enter your work...."
