@@ -1,12 +1,23 @@
+import { useState } from "react";
+import { useTheme } from "../context/theme";
 import Search from "./Search";
 import Tasks from "./Tasks";
 import { SiDarkreader } from "react-icons/si";
 
-export default function Task() {
+function Form() {
+  const { themeMode, darkTheme, lightTheme } = useTheme();
+  const [isClick, setIsClick] = useState(false);
+  function handleTheme() {
+    setIsClick(true);
+    if (isClick) darkTheme();
+    else lightTheme();
+  }
   return (
     <>
-      {/* Dark mode toggle button fixed at the top left */}
-      <button className="absolute top-10 left-5 sm:top-6 sm:left-6 md:top-8 md:left-8 lg:top-10 lg:left-10">
+      <button
+        className="absolute top-10 left-5 sm:top-6 sm:left-6 md:top-8 md:left-8 lg:top-10 lg:left-10"
+        onClick={handleTheme}
+      >
         <SiDarkreader className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl text-white" />
       </button>
 
@@ -21,3 +32,4 @@ export default function Task() {
     </>
   );
 }
+export default Form;

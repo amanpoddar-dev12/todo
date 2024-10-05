@@ -1,13 +1,30 @@
 import "./App.css";
 import "./index.css";
-import Form from "./components/Form";
+import Form from "./components/Form"; // Ensure Form is exported correctly
+import { ThemeProvider } from "./context/theme"; // Ensure ThemeProvider is exported correctly
+import { useEffect, useState } from "react";
+
 function App() {
-  return <div className="">{<Form />}</div>;
+  const [themeMode, setThemeMode] = useState("light");
+
+  const darkTheme = () => {
+    setThemeMode("dark");
+  };
+  const lightTheme = () => {
+    setThemeMode("light");
+  };
+
+  useEffect(() => {
+    const htmlElement = document.querySelector("html");
+    htmlElement.classList.remove("dark", "light");
+    htmlElement.classList.add(themeMode);
+  }, [themeMode]);
+
+  return (
+    <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
+      <Form />
+    </ThemeProvider>
+  );
 }
 
 export default App;
-
-//1 make an object
-//2 add 2 value task,isComplted
-//3 itrate them in manner it will show same as previous
-//4 when user delete or complete work it should be updated in object
