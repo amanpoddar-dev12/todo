@@ -46,11 +46,23 @@ const TaskContextProvider = ({ children }) => {
     setTaskArray(newTaskArray);
   }
   function handleComplete(id) {
-    setTaskArray(
-      taskArray.map((task) =>
-        task.id === id ? { ...task, isComplete: !task.isComplete } : task
-      )
+    const updatedTask = taskArray.map((task) =>
+      task.id === id ? { ...task, isComplete: !task.isComplete } : task
     );
+    // console.log("Updated task");
+    // console.log(updatedTask);
+    const completedTask = updatedTask.find((task) => task.id === id);
+    // console.log("COmpleted task");
+    // console.log(completedTask);
+    const remainingTask = updatedTask.filter((task) => task.id !== id);
+    // console.log("remaining task");
+    // console.log(remainingTask);
+    remainingTask.push(completedTask);
+    // console.log("After push Remaining");
+    // console.log(remainingTask);
+    setTaskArray(remainingTask);
+    // console.log("Set Task Array");
+    // console.log(taskArray);
   }
 
   function handleOnEnterSave(id) {
