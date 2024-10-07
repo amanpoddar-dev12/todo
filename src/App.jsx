@@ -10,7 +10,7 @@ function App() {
       </button>
 
       <h1 className="text-4xl sm:text-3xl lg:text-4xl text-center  font-mono font-extralight md:font-thin tracking-wide text-indigo-100 mt-5">
-        TODO
+        TODO..
       </h1>
       <Form />
     </>

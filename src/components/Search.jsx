@@ -17,7 +17,7 @@ export default function Search() {
     <div className="mt-8 flex flex-row sm:flex-row items-center  space-x-4 sm:space-y-0 sm:space-x-4  sm:w-auto">
       <input
         type="text"
-        placeholder="Enter your work...."
+        placeholder="Enter your task...."
         className="w-auto sm:w-auto px-4 sm:px-6 py-3 rounded-md bg-slate-800 text-white focus:outline-none border border-slate-700"
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
