@@ -31,7 +31,7 @@ const TaskContextProvider = ({ children }) => {
       isEdited: false,
     };
     // console.log(newItem);
-    if (newTask !== "") setTaskArray((prevArray) => [newItem, ...prevArray]);
+    if (newTask !== "") setTaskArray((prevArray) => [...prevArray, newItem]);
     else console.log("please enter task!");
     setNewTask("");
   }
